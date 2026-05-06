@@ -1,1 +1,193 @@
-<p>landing works!</p>
+<app-navbar />
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero__content">
+
+    <div class="hero__left">
+      <div class="hero__badge">
+        <span class="live-dot"></span>
+        Powered by Gemini AI
+      </div>
+
+      <h1 class="hero__headline">
+        One platform.<br>
+        Every market.<br>
+        <span class="hero__accent">Zero noise.</span>
+      </h1>
+
+      <p class="hero__sub">
+        AI-generated intelligence across Indian Equities, F&O,
+        Commodities, Forex, and US Markets — built for traders
+        who want to understand <strong>WHY</strong>, not just WHAT.
+      </p>
+
+      <div class="hero__actions">
+        <a routerLink="/dashboard" class="btn-primary">
+          Open App
+        </a>
+        <a href="#how-it-works" class="btn-secondary">
+          See How It Works
+        </a>
+      </div>
+
+      <div class="hero__proof">
+        <span class="live-dot"></span>
+        Updated every morning at 8:00 AM IST
+      </div>
+    </div>
+
+    <!-- ── Briefing card preview ─────────────────────────── -->
+    <div class="hero__right">
+      <div class="briefing-preview">
+        <div class="briefing-preview__header">
+          <span class="briefing-preview__title">
+            Morning Intelligence Brief
+          </span>
+          <span class="briefing-preview__time">
+            {{ currentTime }}
+          </span>
+        </div>
+
+        <!-- Market pills -->
+        <div class="briefing-preview__pills">
+          <!-- 📌 Angular concept: @for with track -->
+          @for (snap of snapshots; track snap.symbol) {
+            <div class="pill" [class]="sentimentClass(snap)">
+              <span class="pill__name">{{ snap.symbol }}</span>
+              <span class="pill__change">
+                {{ snap.directionLabel }}
+                {{ snap.changeAbsolute | number:'1.2-2' }}
+              </span>
+            </div>
+          }
+
+          <!-- Skeleton pills while loading -->
+          @if (snapshots.length === 0) {
+            @for (i of [1,2,3,4,5]; track i) {
+              <div class="pill skeleton" style="width:80px;height:28px"></div>
+            }
+          }
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Mock AI text -->
+        <p class="briefing-preview__text">
+          Markets set for cautious open. GIFT NIFTY premiums suggest
+          <span class="bullish">gap-up bias</span> driven by Nasdaq's
+          overnight close. <span style="color:var(--blue)">
+          IT and Banking</span> sectors carry strongest cues from
+          FII data.
+        </p>
+
+        <!-- Sources -->
+        <div class="briefing-preview__sources">
+          <span class="text-muted text-xs">Sources:</span>
+          <span class="source-tag">Reuters</span>
+          <span class="source-tag">Economic Times</span>
+          <span class="source-tag">NSE Data</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Markets we cover ──────────────────────────────────── -->
+<section class="markets" id="markets">
+  <div class="section-container">
+    <div class="section-label">MARKET COVERAGE</div>
+    <h2 class="section-title">Every market that moves your portfolio</h2>
+
+    <div class="markets__grid">
+      @for (market of markets; track market.name) {
+        <div class="market-card" [class]="'market-card--' + market.color">
+          <div class="market-card__icon">{{ market.icon }}</div>
+          <div class="market-card__name">{{ market.name }}</div>
+          <div class="market-card__desc">{{ market.desc }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── How it works ──────────────────────────────────────── -->
+<section class="how-it-works" id="how-it-works">
+  <div class="section-container">
+    <div class="section-label">THE PROCESS</div>
+    <h2 class="section-title">Intelligence before the bell</h2>
+
+    <div class="steps">
+      @for (step of steps; track step.number; let last = $last) {
+        <div class="step">
+          <div class="step__number">{{ step.number }}</div>
+          <div class="step__content">
+            <div class="step__title">{{ step.title }}</div>
+            <div class="step__desc">{{ step.desc }}</div>
+          </div>
+        </div>
+
+        <!-- Connector between steps — not after last -->
+        @if (!last) {
+          <div class="step__connector">→</div>
+        }
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── Standout features ─────────────────────────────────── -->
+<section class="features" id="features">
+  <div class="section-container">
+    <div class="section-label">CORE FEATURES</div>
+    <h2 class="section-title">Built by traders, for traders</h2>
+
+    <div class="features__grid">
+      @for (feature of features; track feature.title) {
+        <div class="feature-card">
+          <div class="feature-card__icon"
+               [class]="'feature-card__icon--' + feature.color">
+            {{ feature.icon }}
+          </div>
+          <div class="feature-card__title">{{ feature.title }}</div>
+          <div class="feature-card__desc">{{ feature.desc }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────── -->
+<section class="cta">
+  <div class="section-container">
+    <h2 class="cta__headline">Stop reacting. Start anticipating.</h2>
+    <p class="cta__sub">
+      Intelligence that used to cost ₹20,000/year —
+      now on your dashboard for free.
+    </p>
+    <a routerLink="/dashboard" class="btn-primary">
+      Open App Free
+    </a>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer__content">
+    <div class="footer__logo">
+      <span class="live-dot"></span>
+      MarketMind AI
+    </div>
+    <div class="footer__tagline">Intelligence before the bell.</div>
+    <div class="footer__links">
+      <a href="#features">Features</a>
+      <a href="#markets">Markets</a>
+      <a href="https://github.com/567892143/MarketMindAI"
+         target="_blank">GitHub</a>
+    </div>
+    <div class="footer__copy">
+      © 2025 MarketMind AI · Built with .NET 8 + Angular 17 + Gemini
+    </div>
+  </div>
+</footer>

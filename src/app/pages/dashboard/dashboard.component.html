@@ -1,1 +1,51 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+
+  <!-- Top nav -->
+  <header class="dashboard__nav">
+    <div class="dashboard__logo">
+      <span class="live-dot"></span>
+      MarketMind AI
+    </div>
+
+    <!-- Mode switcher tabs -->
+    <div class="dashboard__modes">
+      @for (mode of modes; track mode.key) {
+        <button class="mode-tab"
+                [class.mode-tab--active]="activeMode === mode.key"
+                (click)="setMode(mode.key)">
+          {{ mode.label }}
+        </button>
+      }
+    </div>
+
+    <div class="dashboard__time">
+      {{ today | date:'EEE, dd MMM · HH:mm' }} IST
+    </div>
+  </header>
+
+  <!-- Live ticker bar -->
+  <app-ticker-bar />
+
+  <!-- Main content placeholder — built in F5 -->
+  <div class="dashboard__content">
+    <div class="dashboard__placeholder">
+      <p style="color:var(--text-muted);text-align:center;
+                padding:60px 20px">
+        Dashboard content coming in Phase F5
+      </p>
+
+      <!-- Verify price cards work -->
+      <div style="display:flex;flex-wrap:wrap;gap:12px;
+                  padding:20px;justify-content:center">
+        @for (symbol of ['NIFTY','BANKNIFTY','CRUDE','GOLD','USDINR'];
+              track symbol) {
+          <div style="width:200px">
+            <app-price-card
+              [snapshot]="getSnapshot(symbol)!" />
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+</div>

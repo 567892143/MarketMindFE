@@ -1,0 +1,113 @@
+:host {
+  display: block;
+  width:   100%;
+}
+
+.ticker {
+  display:      flex;
+  align-items:  center;
+  gap:          12px;
+  background:   rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border);
+  padding:      10px 20px;
+  overflow:     hidden;
+
+  &__status {
+    display:     flex;
+    align-items: center;
+    gap:         6px;
+    font-size:   11px;
+    font-weight: 500;
+    white-space: nowrap;
+    padding:     3px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+
+    &--open {
+      background: var(--green-dim);
+      color:      var(--green);
+    }
+
+    &--closed {
+      background: rgba(255,255,255,0.05);
+      color:      var(--text-muted);
+    }
+  }
+
+  &__divider {
+    width:      1px;
+    height:     20px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  // Scrolling track
+  &__track {
+    display:   flex;
+    gap:       24px;
+    overflow:  hidden;
+    flex:      1;
+
+    // Fade edges
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 5%,
+      black 95%,
+      transparent
+    );
+  }
+
+  &__item {
+    display:     flex;
+    align-items: center;
+    gap:         6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding:     2px 6px;
+    border-radius: var(--radius-xs);
+    transition:  background var(--transition);
+
+    // 📌 SCSS concept: flash animation on price update
+    &--flash {
+      animation: flashUpdate 0.8s ease;
+    }
+  }
+
+  &__label {
+    font-size:   11px;
+    color:       var(--text-muted);
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+  }
+
+  &__price {
+    font-size:   13px;
+    font-family: var(--font-mono);
+    transition:  color 0.3s ease;
+  }
+
+  &__change {
+    font-size:   11px;
+    font-family: var(--font-mono);
+    transition:  color 0.3s ease;
+  }
+
+  &__connection {
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  &__offline {
+    font-size:  11px;
+    color:      var(--text-muted);
+    animation:  pulse 1s ease-in-out infinite;
+  }
+}
+
+// Flash animation when price updates
+// 📌 SCSS concept: @keyframes inside component SCSS
+@keyframes flashUpdate {
+  0%   { background: rgba(0, 255, 136, 0.15); }
+  100% { background: transparent; }
+}

@@ -1,0 +1,58 @@
+.price-card {
+  background:    var(--bg-surface);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding:       14px 16px;
+  transition:    border-color var(--transition);
+
+  // Subtle border tint based on direction
+  &--bullish { border-color: rgba(0, 255, 136, 0.15); }
+  &--bearish { border-color: rgba(255, 68, 68, 0.12); }
+
+  // Flash on price update
+  &--flash { animation: cardFlash 0.8s ease; }
+
+  // Large variant for dashboard hero
+  &--large {
+    padding: 20px;
+
+    .price-card__price { font-size: 28px; }
+  }
+
+  &__header {
+    display:         flex;
+    justify-content: space-between;
+    align-items:     center;
+    margin-bottom:   8px;
+  }
+
+  &__label {
+    font-size:      11px;
+    color:          var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  &__price {
+    font-size:     22px;
+    font-weight:   500;
+    margin-bottom: 4px;
+    line-height:   1;
+    transition:    color 0.3s ease;
+  }
+
+  &__change {
+    font-size:   12px;
+    font-family: var(--font-mono);
+    transition:  color 0.3s ease;
+  }
+
+  &__pct {
+    color: var(--text-muted);
+  }
+}
+
+@keyframes cardFlash {
+  0%   { background: rgba(0, 255, 136, 0.08); }
+  100% { background: var(--bg-surface); }
+}

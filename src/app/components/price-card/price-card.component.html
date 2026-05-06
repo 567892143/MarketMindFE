@@ -1,1 +1,40 @@
-<p>price-card works!</p>
+@if (snapshot) {
+  <div class="price-card"
+       [class.price-card--large]="large"
+       [class.price-card--flash]="isFlashing"
+       [class.price-card--bullish]="snapshot.isBullish"
+       [class.price-card--bearish]="!snapshot.isBullish">
+
+    <div class="price-card__header">
+      <span class="price-card__label">
+        {{ snapshot.displayName }}
+      </span>
+      <span class="price-card__dot live-dot"
+            [style.background]="snapshot.isBullish
+              ? 'var(--green)' : 'var(--red)'">
+      </span>
+    </div>
+
+    <div class="price-card__price mono" [class]="changeClass">
+      {{ snapshot.price | number:'1.2-2' }}
+    </div>
+
+    <div class="price-card__change" [class]="changeClass">
+      {{ snapshot.directionLabel }}
+      {{ snapshot.changeAbsolute | number:'1.2-2' }}
+      <span class="price-card__pct">
+        ({{ snapshot.changePercent | number:'1.2-2' }}%)
+      </span>
+    </div>
+
+  </div>
+} @else {
+  <!-- Skeleton state -->
+  <div class="price-card">
+    <div class="skeleton" style="width:80px;height:12px;margin-bottom:8px">
+    </div>
+    <div class="skeleton" style="width:120px;height:24px;margin-bottom:6px">
+    </div>
+    <div class="skeleton" style="width:80px;height:12px"></div>
+  </div>
+}

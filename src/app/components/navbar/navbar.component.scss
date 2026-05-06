@@ -1,0 +1,60 @@
+// :host targets the component element itself
+// 📌 SCSS concept: :host is unique to Angular components
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  background: rgba(10, 14, 26, 0.85);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         14px 28px;
+  max-width:       1200px;
+  margin:          0 auto;
+
+  &__logo {
+    display:     flex;
+    align-items: center;
+    gap:         8px;
+    font-size:   15px;
+    font-weight: 500;
+    color:       var(--text-primary);
+    cursor:      pointer;
+  }
+
+  // 📌 SCSS concept: & is parent selector
+  // &__pulse compiles to .navbar__pulse
+  &__pulse {
+    width:            8px;
+    height:           8px;
+    border-radius:    50%;
+    background:       var(--green);
+    animation:        pulse 2s ease-in-out infinite;
+    flex-shrink:      0;
+  }
+
+  &__links {
+    display: flex;
+    gap:     28px;
+
+    a {
+      font-size:       13px;
+      color:           var(--text-secondary);
+      text-decoration: none;
+      transition:      color var(--transition);
+
+      &:hover { color: var(--text-primary); }
+    }
+  }
+}
+
+// Responsive — hide links on mobile
+@media (max-width: 768px) {
+  .navbar__links { display: none; }
+}

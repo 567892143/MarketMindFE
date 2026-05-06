@@ -1,1 +1,52 @@
-<p>ticker-bar works!</p>
+<div class="ticker">
+
+  <!-- Market status badge -->
+  <div class="ticker__status"
+       [class.ticker__status--open]="isMarketOpen()"
+       [class.ticker__status--closed]="!isMarketOpen()">
+    <span class="live-dot"
+          [style.background]="isMarketOpen()
+            ? 'var(--green)' : 'var(--text-muted)'">
+    </span>
+    {{ getSessionLabel() }}
+  </div>
+
+  <!-- Divider -->
+  <div class="ticker__divider"></div>
+
+  <!-- Scrolling price items -->
+  <div class="ticker__track">
+    @for (snap of snapshots; track snap.symbol) {
+      <div class="ticker__item"
+           [class.ticker__item--flash]="isFlashing(snap.symbol)">
+
+        <span class="ticker__label">{{ snap.symbol }}</span>
+
+        <!-- 📌 Angular concept: [class.bullish] conditional class -->
+        <span class="ticker__price mono"
+              [class.bullish]="snap.isBullish"
+              [class.bearish]="!snap.isBullish">
+          {{ snap.price | number:'1.2-2' }}
+        </span>
+
+        <span class="ticker__change"
+              [class.bullish]="snap.isBullish"
+              [class.bearish]="!snap.isBullish">
+          {{ snap.directionLabel }}{{ snap.changePercent
+            | number:'1.2-2' }}%
+        </span>
+
+      </div>
+    }
+  </div>
+
+  <!-- Connection indicator -->
+  <div class="ticker__connection">
+    @if (connected) {
+      <span class="live-dot"></span>
+    } @else {
+      <span class="ticker__offline">Reconnecting...</span>
+    }
+  </div>
+
+</div>

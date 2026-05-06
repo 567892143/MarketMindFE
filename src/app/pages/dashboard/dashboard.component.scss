@@ -1,0 +1,65 @@
+.dashboard {
+  display:        flex;
+  flex-direction: column;
+  min-height:     100vh;
+  background:     var(--bg-primary);
+
+  &__nav {
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+    padding:         12px 20px;
+    border-bottom:   1px solid var(--border);
+    background:      rgba(10, 14, 26, 0.9);
+    backdrop-filter: blur(12px);
+    position:        sticky;
+    top:             0;
+    z-index:         50;
+  }
+
+  &__logo {
+    display:     flex;
+    align-items: center;
+    gap:         8px;
+    font-size:   14px;
+    font-weight: 500;
+    color:       var(--text-primary);
+  }
+
+  &__modes {
+    display: flex;
+    gap:     4px;
+  }
+
+  &__time {
+    font-size:   12px;
+    color:       var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  &__content {
+    flex: 1;
+    padding: 20px;
+  }
+}
+
+// Mode switcher tabs
+.mode-tab {
+  background:    transparent;
+  border:        none;
+  color:         var(--text-muted);
+  font-size:     13px;
+  padding:       6px 16px;
+  border-radius: 6px;
+  cursor:        pointer;
+  transition:    all var(--transition);
+
+  &:hover { color: var(--text-primary); }
+
+  // 📌 SCSS concept: --active modifier with bottom border
+  &--active {
+    color:         var(--text-primary);
+    background:    rgba(255,255,255,0.06);
+    border-bottom: 2px solid var(--green);
+  }
+}

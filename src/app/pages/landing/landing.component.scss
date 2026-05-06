@@ -1,0 +1,428 @@
+// ── Hero ─────────────────────────────────────────────────────
+.hero {
+  padding: 80px 28px 60px;
+
+  &__content {
+    display:         flex;
+    align-items:     center;
+    gap:             48px;
+    max-width:       1200px;
+    margin:          0 auto;
+  }
+
+  &__left {
+    flex: 1;
+    // 📌 SCSS concept: animation applied to element on load
+    animation: fadeIn 0.6s ease both;
+  }
+
+  &__right {
+    flex: 1;
+    animation: fadeIn 0.6s ease 0.2s both;
+  }
+
+  &__badge {
+    display:       inline-flex;
+    align-items:   center;
+    gap:           8px;
+    background:    var(--blue-dim);
+    border:        1px solid rgba(0, 180, 255, 0.25);
+    color:         var(--blue);
+    font-size:     12px;
+    padding:       5px 12px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  &__headline {
+    font-size:     48px;
+    font-weight:   600;
+    line-height:   1.15;
+    color:         var(--text-primary);
+    margin-bottom: 20px;
+
+    // Responsive
+    @media (max-width: 768px) { font-size: 36px; }
+  }
+
+  &__accent { color: var(--green); }
+
+  &__sub {
+    font-size:     15px;
+    color:         var(--text-secondary);
+    line-height:   1.75;
+    margin-bottom: 32px;
+    max-width:     480px;
+
+    strong { color: var(--text-primary); }
+  }
+
+  &__actions {
+    display:       flex;
+    gap:           12px;
+    margin-bottom: 24px;
+    flex-wrap:     wrap;
+  }
+
+  &__proof {
+    display:     flex;
+    align-items: center;
+    gap:         8px;
+    font-size:   12px;
+    color:       var(--text-muted);
+  }
+}
+
+// ── Briefing preview card ─────────────────────────────────────
+.briefing-preview {
+  background:    var(--bg-surface);
+  border:        1px solid var(--border);
+  border-radius: var(--radius);
+  padding:       24px;
+
+  &__header {
+    display:         flex;
+    justify-content: space-between;
+    align-items:     center;
+    margin-bottom:   16px;
+  }
+
+  &__title {
+    font-size:   13px;
+    font-weight: 500;
+    color:       var(--text-secondary);
+  }
+
+  &__time {
+    font-size:   11px;
+    color:       var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  &__pills {
+    display:   flex;
+    flex-wrap: wrap;
+    gap:       8px;
+    margin-bottom: 16px;
+  }
+
+  &__text {
+    font-size:     13px;
+    color:         var(--text-secondary);
+    line-height:   1.75;
+    margin-bottom: 14px;
+  }
+
+  &__sources {
+    display:     flex;
+    align-items: center;
+    gap:         6px;
+    flex-wrap:   wrap;
+  }
+}
+
+// ── Market pills in hero card ─────────────────────────────────
+.pill {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           6px;
+  background:    var(--bg-surface);
+  border:        1px solid var(--border);
+  border-radius: 20px;
+  padding:       4px 10px;
+  font-size:     12px;
+  font-family:   var(--font-mono);
+
+  // 📌 SCSS concept: &.bullish uses global class from styles.scss
+  &.bullish { border-color: rgba(0, 255, 136, 0.3); }
+  &.bearish { border-color: rgba(255, 68, 68, 0.3); }
+
+  &__name  { color: var(--text-muted); font-size: 10px; }
+  &__change{ color: inherit; }
+}
+
+// ── Source tags ───────────────────────────────────────────────
+.source-tag {
+  font-size:     10px;
+  background:    rgba(255,255,255,0.06);
+  color:         var(--text-muted);
+  padding:       2px 8px;
+  border-radius: var(--radius-xs);
+}
+
+// ── Section shared styles ─────────────────────────────────────
+.section-container {
+  max-width: 1200px;
+  margin:    0 auto;
+  padding:   0 28px;
+}
+
+.section-label {
+  font-size:      11px;
+  font-weight:    500;
+  color:          var(--blue);
+  letter-spacing: 1.5px;
+  text-align:     center;
+  margin-bottom:  12px;
+}
+
+.section-title {
+  font-size:     28px;
+  font-weight:   500;
+  text-align:    center;
+  color:         var(--text-primary);
+  margin-bottom: 48px;
+}
+
+// ── Markets section ───────────────────────────────────────────
+.markets {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+
+  &__grid {
+    display:               grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap:                   16px;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+.market-card {
+  background:    var(--bg-surface);
+  border:        1px solid var(--border);
+  border-radius: var(--radius);
+  padding:       20px 16px;
+  transition:    border-color var(--transition),
+                 transform var(--transition);
+  cursor:        default;
+
+  &:hover {
+    border-color: var(--border-strong);
+    transform:    translateY(-2px);
+  }
+
+  &__icon {
+    font-size:     22px;
+    margin-bottom: 12px;
+  }
+
+  &__name {
+    font-size:     13px;
+    font-weight:   500;
+    color:         var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  &__desc {
+    font-size:  12px;
+    color:      var(--text-muted);
+    line-height: 1.6;
+  }
+
+  // Color variants per market type
+  &--blue   .market-card__icon { color: var(--blue); }
+  &--teal   .market-card__icon { color: #00C9A7; }
+  &--amber  .market-card__icon { color: var(--amber); }
+  &--purple .market-card__icon { color: #8B5CF6; }
+  &--coral  .market-card__icon { color: #F87171; }
+}
+
+// ── How it works ──────────────────────────────────────────────
+.how-it-works {
+  padding:    80px 0;
+  border-top: 1px solid var(--border);
+}
+
+.steps {
+  display:     flex;
+  align-items: flex-start;
+  gap:         12px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.step {
+  flex:          1;
+  background:    var(--bg-surface);
+  border:        1px solid var(--border);
+  border-radius: var(--radius);
+  padding:       24px;
+
+  &__number {
+    font-size:     32px;
+    font-weight:   500;
+    font-family:   var(--font-mono);
+    color:         var(--green);
+    margin-bottom: 12px;
+    opacity:       0.8;
+  }
+
+  &__title {
+    font-size:     15px;
+    font-weight:   500;
+    color:         var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  &__desc {
+    font-size:  13px;
+    color:      var(--text-muted);
+    line-height: 1.6;
+  }
+
+  &__connector {
+    font-size:   24px;
+    color:       var(--text-muted);
+    padding-top: 32px;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) { display: none; }
+  }
+}
+
+// ── Features section ──────────────────────────────────────────
+.features {
+  padding:    80px 0;
+  border-top: 1px solid var(--border);
+
+  &__grid {
+    display:               grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:                   20px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.feature-card {
+  background:    var(--bg-surface);
+  border:        1px solid var(--border);
+  border-radius: var(--radius);
+  padding:       28px;
+  transition:    border-color var(--transition);
+
+  &:hover { border-color: var(--border-strong); }
+
+  &__icon {
+    width:         40px;
+    height:        40px;
+    border-radius: var(--radius-sm);
+    display:       flex;
+    align-items:   center;
+    justify-content: center;
+    font-size:     18px;
+    margin-bottom: 16px;
+
+    &--blue   { background: var(--blue-dim);  color: var(--blue); }
+    &--green  { background: var(--green-dim); color: var(--green); }
+    &--purple {
+      background: rgba(139, 92, 246, 0.12);
+      color:      #8B5CF6;
+    }
+  }
+
+  &__title {
+    font-size:     15px;
+    font-weight:   500;
+    color:         var(--text-primary);
+    margin-bottom: 10px;
+  }
+
+  &__desc {
+    font-size:  13px;
+    color:      var(--text-muted);
+    line-height: 1.7;
+  }
+}
+
+// ── CTA section ───────────────────────────────────────────────
+.cta {
+  padding:    100px 0;
+  text-align: center;
+  border-top: 1px solid var(--border);
+
+  &__headline {
+    font-size:     36px;
+    font-weight:   500;
+    color:         var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  &__sub {
+    font-size:     15px;
+    color:         var(--text-muted);
+    margin-bottom: 36px;
+  }
+}
+
+// ── Footer ────────────────────────────────────────────────────
+.footer {
+  padding:    40px 28px;
+  border-top: 1px solid var(--border);
+
+  &__content {
+    max-width:   1200px;
+    margin:      0 auto;
+    text-align:  center;
+    display:     flex;
+    flex-direction: column;
+    align-items: center;
+    gap:         12px;
+  }
+
+  &__logo {
+    display:     flex;
+    align-items: center;
+    gap:         8px;
+    font-size:   15px;
+    font-weight: 500;
+    color:       var(--text-primary);
+  }
+
+  &__tagline {
+    font-size: 13px;
+    color:     var(--text-muted);
+    font-style: italic;
+  }
+
+  &__links {
+    display: flex;
+    gap:     24px;
+
+    a {
+      font-size:       12px;
+      color:           var(--text-muted);
+      text-decoration: none;
+
+      &:hover { color: var(--text-primary); }
+    }
+  }
+
+  &__copy {
+    font-size: 11px;
+    color:     var(--text-muted);
+    margin-top: 8px;
+  }
+}
+
+// ── Mobile full layout ────────────────────────────────────────
+@media (max-width: 768px) {
+  .hero__content {
+    flex-direction: column;
+  }
+
+  .hero__right {
+    width: 100%;
+  }
+}

@@ -1,1 +1,90 @@
-<p>fo-snapshot works!</p>
+<div class="fo">
+
+  <div class="fo__header">
+    <span class="fo__title">F&O Snapshot</span>
+
+    <!-- Symbol tabs -->
+    <div class="fo__tabs">
+      @for (sym of ['NIFTY','BANKNIFTY']; track sym) {
+        <button class="fo__tab"
+                [class.fo__tab--active]="activeSymbol === sym"
+                (click)="activeSymbol = sym">
+          {{ sym }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="skeleton" style="height:100px;border-radius:8px">
+    </div>
+  }
+
+  @if (activeFo && !loading) {
+
+    <!-- PCR and Max Pain row -->
+    <div class="fo__metrics">
+      <div class="fo__metric">
+        <span class="fo__metric-label">PCR</span>
+        <span class="fo__metric-value mono"
+              [class]="getPcrClass(activeFo.pcrSignal)">
+          {{ activeFo.putCallRatio | number:'1.2-2' }}
+        </span>
+        <span class="badge fo__metric-badge"
+              [class]="getPcrClass(activeFo.pcrSignal) + '-bg'">
+          {{ activeFo.pcrSignal }}
+        </span>
+      </div>
+
+      <div class="fo__divider"></div>
+
+      <div class="fo__metric">
+        <span class="fo__metric-label">Max Pain</span>
+        <span class="fo__metric-value mono">
+          {{ activeFo.maxPain | number:'1.0-0' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- OI Strikes table -->
+    <div class="fo__table">
+      <div class="fo__table-header">
+        <span>Strike</span>
+        <span>Call OI</span>
+        <span>Put OI</span>
+        <span>Signal</span>
+      </div>
+
+      @for (strike of activeFo.topStrikes; track strike.strike) {
+        <div class="fo__table-row"
+             [class]="getStrikeClass(strike.signal)">
+          <span class="mono">
+            {{ strike.strike | number:'1.0-0' }}
+          </span>
+          <span class="mono text-muted">
+            {{ formatOI(strike.callOI) }}
+          </span>
+          <span class="mono text-muted">
+            {{ formatOI(strike.putOI) }}
+          </span>
+          <span class="fo__signal"
+                [class]="strike.signal.toLowerCase()
+                  .includes('support')
+                    ? 'bullish'
+                    : 'bearish'">
+            {{ strike.signal }}
+          </span>
+        </div>
+      }
+    </div>
+
+    <!-- Trader note -->
+    <div class="fo__note text-xs text-muted">
+      PCR &gt; 1.2 = bullish bias · Max Pain = likely expiry target
+    </div>
+
+  }
+
+</div>

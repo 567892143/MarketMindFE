@@ -1,1 +1,75 @@
-<p>sector-heatmap works!</p>
+<div class="heatmap">
+
+  <div class="heatmap__header">
+    <span class="heatmap__title">Sector Sentiment</span>
+    <span class="heatmap__sub text-xs text-muted">
+      Click sector for deep analysis
+    </span>
+  </div>
+
+  <!-- Loading state -->
+  @if (loading) {
+    <div class="heatmap__grid">
+      @for (i of [1,2,3,4,5,6,7,8]; track i) {
+        <div class="heatmap__skeleton skeleton"
+             style="height:56px;border-radius:8px">
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Sector grid -->
+  @if (!loading) {
+    <div class="heatmap__grid">
+
+      @for (sector of sectors; track sector.sector;
+            let i = $index) {
+
+        <!-- 📌 Angular concept: (click) event binding -->
+        <!-- 📌 Angular concept: [style] dynamic style -->
+        <div class="sector-row"
+             (click)="onSectorClick(sector.sector)"
+             [style.animation-delay]="getDelay(i)">
+
+          <div class="sector-row__top">
+            <span class="sector-row__name">
+              {{ sector.sector }}
+            </span>
+
+            <!-- Score + label -->
+            <div class="sector-row__right">
+              <span class="sector-row__score"
+                    [class]="getSentimentClass(sector.overallLabel)">
+                {{ sector.bullishScore | number:'1.0-0' }}%
+              </span>
+              <span class="badge sector-row__badge"
+                    [class]="getSentimentClass(sector.overallLabel)
+                      + '-bg'">
+                {{ sector.overallLabel }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Progress bar -->
+          <!-- 📌 Angular concept: [style.width.%] binds percentage -->
+          <div class="sector-row__track">
+            <div class="sector-row__bar"
+                 [style.width.%]="sector.bullishScore"
+                 [style.background]="getBarColor(sector.bullishScore)">
+            </div>
+          </div>
+
+          <!-- Article count if available -->
+          @if (sector.articleCount > 0) {
+            <div class="sector-row__count text-xs text-muted">
+              {{ sector.articleCount }} articles
+            </div>
+          }
+
+        </div>
+      }
+
+    </div>
+  }
+
+</div>

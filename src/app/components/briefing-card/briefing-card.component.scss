@@ -1,0 +1,106 @@
+.briefing {
+  background:    var(--bg-surface);
+  border:        1px solid var(--border);
+  border-radius: var(--radius);
+  padding:       20px;
+  height:        100%;
+
+  &__header {
+    margin-bottom: 16px;
+  }
+
+  &__title-row {
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+    margin-bottom:   10px;
+  }
+
+  &__title {
+    font-size:   13px;
+    font-weight: 500;
+    color:       var(--text-primary);
+  }
+
+  &__refreshing {
+    font-size:  11px;
+    color:      var(--blue);
+    animation:  pulse 1s ease-in-out infinite;
+  }
+
+  &__meta {
+    display:     flex;
+    align-items: center;
+    gap:         10px;
+    flex-wrap:   wrap;
+  }
+
+  &__time {
+    font-size:   11px;
+    color:       var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  &__loading {
+    padding: 4px 0;
+  }
+
+  &__error {
+    display:     flex;
+    align-items: center;
+    gap:         12px;
+    font-size:   13px;
+    color:       var(--text-muted);
+    padding:     20px 0;
+  }
+
+  &__retry {
+    background:    transparent;
+    border:        1px solid var(--border);
+    color:         var(--blue);
+    font-size:     12px;
+    padding:       4px 12px;
+    border-radius: var(--radius-xs);
+    cursor:        pointer;
+    transition:    border-color var(--transition);
+
+    &:hover { border-color: var(--blue); }
+  }
+
+  &__content {
+    animation: fadeIn 0.4s ease;
+  }
+
+  &__text {
+    margin-bottom: 16px;
+  }
+
+  &__para {
+    font-size:     13px;
+    color:         var(--text-secondary);
+    line-height:   1.75;
+    margin-bottom: 12px;
+
+    &:last-child { margin-bottom: 0; }
+  }
+
+  &__sources {
+    display:     flex;
+    align-items: center;
+    gap:         6px;
+    flex-wrap:   wrap;
+  }
+
+  &__tokens {
+    margin-left: auto;
+  }
+}
+
+.source-chip {
+  font-size:     10px;
+  background:    rgba(255,255,255,0.05);
+  color:         var(--text-muted);
+  padding:       2px 8px;
+  border-radius: var(--radius-xs);
+  border:        1px solid var(--border);
+}

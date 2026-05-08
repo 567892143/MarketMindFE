@@ -1,0 +1,35 @@
+<div class="us-recap">
+  <div class="us-recap__header">
+    <span class="us-recap__title">US Market Recap</span>
+    <span class="text-xs text-muted">Last night's close</span>
+  </div>
+
+  @if (loading) {
+    @for (i of [1,2,3]; track i) {
+      <div class="skeleton"
+           style="height:28px;margin-bottom:8px;border-radius:6px">
+      </div>
+    }
+  }
+
+  @for (snap of usSnapshots; track snap.symbol) {
+    <div class="us-row">
+      <span class="us-row__name">{{ snap.displayName }}</span>
+      <span class="us-row__price mono">
+        {{ snap.price | number:'1.2-2' }}
+      </span>
+      <span class="us-row__change"
+            [class.bullish]="snap.isBullish"
+            [class.bearish]="!snap.isBullish">
+        {{ snap.directionLabel }}{{ snap.changePercent
+          | number:'1.2-2' }}%
+      </span>
+    </div>
+  }
+
+  @if (usInsight) {
+    <div class="us-recap__insight">
+      {{ usInsight }}
+    </div>
+  }
+</div>

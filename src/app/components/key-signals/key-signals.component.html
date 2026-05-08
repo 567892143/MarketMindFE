@@ -1,0 +1,40 @@
+<div class="signals">
+  <div class="signals__header">
+    <span class="signals__title">Key Signals Today</span>
+  </div>
+
+  @if (loading) {
+    @for (i of [1,2,3,4]; track i) {
+      <div class="signal-row">
+        <div class="skeleton" style="width:100%;height:36px;
+             border-radius:8px"></div>
+      </div>
+    }
+  }
+
+  @for (signal of signals; track signal.label) {
+    <div class="signal-row">
+
+      <div class="signal-row__icon">{{ signal.icon }}</div>
+
+      <div class="signal-row__info">
+        <span class="signal-row__label">{{ signal.label }}</span>
+      </div>
+
+      <!-- 📌 Angular concept: dynamic class from component method -->
+      <div class="signal-row__value" [class]="signal.direction">
+        {{ signal.value }}
+      </div>
+
+      <!-- Direction indicator dot -->
+      <div class="signal-row__dot"
+           [style.background]="signal.direction === 'bullish'
+             ? 'var(--green)'
+             : signal.direction === 'bearish'
+               ? 'var(--red)'
+               : 'var(--text-muted)'">
+      </div>
+
+    </div>
+  }
+</div>

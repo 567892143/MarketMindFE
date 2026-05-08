@@ -1,1 +1,86 @@
-<p>briefing-card works!</p>
+<div class="briefing">
+
+  <!-- Header -->
+  <div class="briefing__header">
+    <div class="briefing__title-row">
+      <span class="briefing__title">Today's AI Briefing</span>
+      @if (refreshing) {
+        <span class="briefing__refreshing">Refreshing...</span>
+      }
+    </div>
+
+    @if (briefing) {
+      <div class="briefing__meta">
+        <!-- Sentiment badge -->
+        <span class="badge"
+              [class.bullish-bg]="briefing.isBullish"
+              [class.bearish-bg]="!briefing.isBullish">
+          <span class="live-dot"
+                [style.background]="briefing.isBullish
+                  ? 'var(--green)' : 'var(--red)'">
+          </span>
+          {{ sentimentLabel }} Sentiment
+        </span>
+
+        <span class="briefing__time">
+          {{ generatedTime }}
+        </span>
+      </div>
+    }
+  </div>
+
+  <!-- Loading state -->
+  @if (loading) {
+    <div class="briefing__loading">
+      <div class="skeleton" style="height:14px;margin-bottom:10px"></div>
+      <div class="skeleton"
+           style="height:14px;width:85%;margin-bottom:10px"></div>
+      <div class="skeleton"
+           style="height:14px;width:70%;margin-bottom:20px"></div>
+      <div class="skeleton" style="height:14px;margin-bottom:10px"></div>
+      <div class="skeleton"
+           style="height:14px;width:90%;margin-bottom:10px"></div>
+      <div class="skeleton" style="height:14px;width:60%"></div>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (error && !loading) {
+    <div class="briefing__error">
+      <span>Could not load briefing.</span>
+      <button class="briefing__retry" (click)="loadBriefing()">
+        Retry
+      </button>
+    </div>
+  }
+
+  <!-- Content -->
+  @if (briefing && !loading) {
+    <div class="briefing__content">
+
+      <!-- AI paragraphs -->
+      <div class="briefing__text">
+        @for (para of paragraphs; track $index) {
+          <p class="briefing__para">{{ para }}</p>
+        }
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Sources row -->
+      <div class="briefing__sources">
+        <span class="text-xs text-muted">Sources:</span>
+        @for (source of briefing.sourceNames; track source) {
+          <span class="source-chip">{{ source }}</span>
+        }
+
+        <!-- Token count — shows AI usage -->
+        <span class="briefing__tokens text-xs text-muted">
+          ~{{ briefing.tokensUsed | number }} tokens
+        </span>
+      </div>
+
+    </div>
+  }
+
+</div>

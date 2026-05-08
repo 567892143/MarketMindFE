@@ -1,13 +1,12 @@
 <div class="dashboard">
 
-  <!-- Top nav -->
+  <!-- ── Top nav ──────────────────────────────────────────── -->
   <header class="dashboard__nav">
-    <div class="dashboard__logo">
+    <a routerLink="/" class="dashboard__logo">
       <span class="live-dot"></span>
       MarketMind AI
-    </div>
+    </a>
 
-    <!-- Mode switcher tabs -->
     <div class="dashboard__modes">
       @for (mode of modes; track mode.key) {
         <button class="mode-tab"
@@ -19,33 +18,89 @@
     </div>
 
     <div class="dashboard__time">
-      {{ today | date:'EEE, dd MMM · HH:mm' }} IST
+      {{ today | date:'EEE, dd MMM' }} ·
+      <span class="live-dot" style="width:5px;height:5px"></span>
+      Live
     </div>
   </header>
 
-  <!-- Live ticker bar -->
+  <!-- ── Ticker bar ───────────────────────────────────────── -->
   <app-ticker-bar />
 
-  <!-- Main content placeholder — built in F5 -->
-  <div class="dashboard__content">
-    <div class="dashboard__placeholder">
-      <p style="color:var(--text-muted);text-align:center;
-                padding:60px 20px">
-        Dashboard content coming in Phase F5
-      </p>
+  <!-- ── Main grid ────────────────────────────────────────── -->
+  <main class="dashboard__grid">
 
-      <!-- Verify price cards work -->
-      <div style="display:flex;flex-wrap:wrap;gap:12px;
-                  padding:20px;justify-content:center">
-        @for (symbol of ['NIFTY','BANKNIFTY','CRUDE','GOLD','USDINR'];
+    <!-- ── Left column ──────────────────────────────────────── -->
+    <div class="dashboard__left">
+
+      <!-- AI Briefing — main feature -->
+      <app-briefing-card />
+
+      <!-- Key signals -->
+      <app-key-signals />
+
+    </div>
+
+    <!-- ── Middle column ────────────────────────────────────── -->
+    <div class="dashboard__middle">
+
+      <!-- Index price cards -->
+      <div class="index-cards">
+        @for (symbol of ['NIFTY','BANKNIFTY','SENSEX'];
               track symbol) {
-          <div style="width:200px">
-            <app-price-card
-              [snapshot]="getSnapshot(symbol)!" />
-          </div>
+          <app-price-card
+            [snapshot]="getSnapshot(symbol)!"
+            [large]="symbol === 'NIFTY'" />
         }
       </div>
+
+      <!-- Commodities row -->
+      <div class="commodity-row">
+        <div class="commodity-row__label text-xs text-muted">
+          Commodities & Forex
+        </div>
+        <div class="commodity-row__cards">
+          @for (symbol of ['CRUDE','GOLD','USDINR','DXY'];
+                track symbol) {
+            <app-price-card
+              [snapshot]="getSnapshot(symbol)!" />
+          }
+        </div>
+      </div>
+
+      <!-- Why Market Moved teaser -->
+      <div class="why-teaser card">
+        <div class="why-teaser__icon">◎</div>
+        <div class="why-teaser__content">
+          <div class="why-teaser__title">
+            Why Market Moved Today
+          </div>
+          <div class="why-teaser__sub text-muted text-sm">
+            Post-session AI analysis available after 4:00 PM IST
+          </div>
+        </div>
+        <div class="why-teaser__badge neutral-bg badge">
+          After Close
+        </div>
+      </div>
+
     </div>
-  </div>
+
+    <!-- ── Right column ──────────────────────────────────────── -->
+    <div class="dashboard__right">
+
+      <!-- US markets -->
+      <app-us-recap />
+
+      <!-- Sector heatmap placeholder — built in F6 -->
+       <!-- F&O Snapshot -->
+      <app-fo-snapshot />
+
+       <!-- Sector heatmap -->
+       <app-sector-heatmap />
+
+    </div>
+
+  </main>
 
 </div>

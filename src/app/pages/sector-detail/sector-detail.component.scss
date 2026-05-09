@@ -1,0 +1,283 @@
+.sector-page {
+  min-height: 100vh;
+  padding:    0 0 48px;
+
+  &__nav {
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+    padding:         12px 24px;
+    border-bottom:   1px solid var(--border);
+    background:      rgba(10,14,26,0.92);
+    backdrop-filter: blur(12px);
+    position:        sticky;
+    top:             0;
+    z-index:         50;
+  }
+
+  &__header {
+    padding:       28px 24px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  &__title-row {
+    display:     flex;
+    align-items: center;
+    gap:         14px;
+    flex-wrap:   wrap;
+  }
+
+  &__title {
+    font-size:   24px;
+    font-weight: 500;
+    color:       var(--text-primary);
+  }
+
+  &__meta {
+    margin-top: 8px;
+  }
+
+  // 📌 CSS Grid: 2 columns with responsive collapse
+  &__grid {
+    display:               grid;
+    grid-template-columns: 1fr 38%;
+    gap:                   20px;
+    padding:               20px 24px;
+    align-items:           start;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__left, &__right {
+    display:        flex;
+    flex-direction: column;
+    gap:            16px;
+  }
+
+  &__error {
+    margin:    20px 24px;
+    color:     var(--text-muted);
+    font-size: 14px;
+  }
+}
+
+.back-btn {
+  display:         flex;
+  align-items:     center;
+  gap:             6px;
+  font-size:       13px;
+  color:           var(--text-secondary);
+  text-decoration: none;
+  transition:      color var(--transition);
+
+  &:hover { color: var(--text-primary); }
+}
+
+// ── AI Analysis card ──────────────────────────────────────────
+.analysis-card {
+  &__header {
+    display:         flex;
+    justify-content: space-between;
+    align-items:     center;
+    margin-bottom:   14px;
+  }
+
+  &__title {
+    font-size:   13px;
+    font-weight: 500;
+    color:       var(--text-primary);
+  }
+
+  &__text {
+    font-size:     13px;
+    color:         var(--text-secondary);
+    line-height:   1.8;
+    white-space:   pre-line;
+    margin-bottom: 16px;
+  }
+
+  &__sources {
+    display:     flex;
+    align-items: center;
+    gap:         6px;
+    flex-wrap:   wrap;
+    padding-top: 12px;
+    border-top:  1px solid var(--border);
+  }
+}
+
+.blue-badge {
+  background: var(--blue-dim);
+  color:      var(--blue);
+  font-size:  10px;
+  padding:    2px 8px;
+  border-radius: 20px;
+}
+
+.source-chip {
+  font-size:     10px;
+  background:    rgba(255,255,255,0.05);
+  color:         var(--text-muted);
+  padding:       2px 8px;
+  border-radius: var(--radius-xs);
+  border:        1px solid var(--border);
+}
+
+// ── Stocks table ──────────────────────────────────────────────
+.stocks-card {
+  &__header {
+    margin-bottom: 14px;
+  }
+
+  &__title {
+    font-size:   13px;
+    font-weight: 500;
+    color:       var(--text-primary);
+  }
+}
+
+.stocks-table {
+  &__head {
+    display:               grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    font-size:             10px;
+    color:                 var(--text-muted);
+    letter-spacing:        0.5px;
+    padding:               6px 0;
+    border-bottom:         1px solid var(--border);
+    text-transform:        uppercase;
+  }
+
+  &__row {
+    display:               grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding:               10px 0;
+    border-bottom:         1px solid rgba(255,255,255,0.04);
+    align-items:           center;
+    transition:            background var(--transition);
+
+    &:last-child { border-bottom: none; }
+    &:hover      { background: var(--bg-surface-hover); }
+  }
+
+  &__symbol {
+    font-size:   12px;
+    font-weight: 500;
+    color:       var(--text-primary);
+  }
+
+  &__price {
+    font-size: 12px;
+    color:     var(--text-secondary);
+  }
+
+  &__change {
+    font-size:   12px;
+    font-family: var(--font-mono);
+  }
+
+  &__signal {
+    font-size:  10px;
+    padding:    2px 7px;
+    border-radius: var(--radius-xs);
+  }
+}
+
+// ── News feed ─────────────────────────────────────────────────
+.news-card {
+  &__title {
+    font-size:     13px;
+    font-weight:   500;
+    color:         var(--text-primary);
+    margin-bottom: 14px;
+  }
+}
+
+.news-item {
+  display:         block;
+  padding:         12px 0;
+  border-bottom:   1px solid var(--border);
+  text-decoration: none;
+  transition:      background var(--transition);
+
+  &:last-child { border-bottom: none; }
+
+  &:hover .news-item__headline {
+    color: var(--text-primary);
+  }
+
+  &__source {
+    font-size:     10px;
+    color:         var(--text-muted);
+    margin-bottom: 5px;
+    letter-spacing: 0.3px;
+  }
+
+  &__headline {
+    font-size:     12px;
+    color:         var(--text-secondary);
+    line-height:   1.6;
+    transition:    color var(--transition);
+    margin-bottom: 6px;
+  }
+
+  &__sentiment {
+    font-size:  10px;
+    padding:    1px 7px;
+    border-radius: var(--radius-xs);
+  }
+}
+
+// ── Cross-asset chain ─────────────────────────────────────────
+.chain-card {
+  &__title {
+    font-size:     13px;
+    font-weight:   500;
+    color:         var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  &__insight {
+    margin-top:  14px;
+    padding-top: 14px;
+    border-top:  1px solid var(--border);
+    font-size:   12px;
+    color:       var(--blue);
+    line-height: 1.65;
+    font-style:  italic;
+  }
+}
+
+.chain {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       6px;
+  align-items: center;
+
+  &__step {
+    display:     flex;
+    align-items: center;
+    gap:         6px;
+  }
+
+  &__pill {
+    display:       flex;
+    align-items:   center;
+    gap:           5px;
+    background:    rgba(255,255,255,0.06);
+    border:        1px solid var(--border);
+    border-radius: 20px;
+    padding:       4px 12px;
+    font-size:     12px;
+    color:         var(--text-secondary);
+    white-space:   nowrap;
+  }
+
+  &__arrow {
+    font-size:  14px;
+    color:      var(--text-muted);
+    flex-shrink: 0;
+  }
+}

@@ -1,1 +1,198 @@
-<p>sector-detail works!</p>
+<div class="sector-page">
+
+  <!-- ── Back nav ──────────────────────────────────────── -->
+  <header class="sector-page__nav">
+    <a routerLink="/dashboard" class="back-btn">
+      ← Dashboard
+    </a>
+    <div class="sector-page__logo text-muted text-sm">
+      MarketMind AI
+    </div>
+  </header>
+
+  <!-- ── Page header ───────────────────────────────────── -->
+  <div class="sector-page__header">
+    <div class="sector-page__title-row">
+      <h1 class="sector-page__title">{{ displayName }} Sector</h1>
+
+      @if (analysis) {
+        <span class="badge"
+              [class]="sentimentClass + '-bg'">
+          <span class="live-dot"
+                [style.background]="sentimentClass === 'bullish'
+                  ? 'var(--green)' : 'var(--red)'">
+          </span>
+          {{ analysis.sentiment.overallLabel }} ·
+          {{ analysis.sentiment.bullishScore | number:'1.0-0' }}%
+          confidence
+        </span>
+      }
+    </div>
+
+    @if (analysis) {
+      <div class="sector-page__meta text-sm text-muted">
+        Updated {{ formatDate(analysis.generatedAt) }} ·
+        {{ analysis.sentiment.articleCount }} articles analysed
+      </div>
+    }
+  </div>
+
+  <!-- ── Loading ────────────────────────────────────────── -->
+  @if (loading) {
+    <div class="sector-page__grid">
+      <div class="skeleton" style="height:200px;border-radius:12px">
+      </div>
+      <div class="skeleton" style="height:300px;border-radius:12px">
+      </div>
+    </div>
+  }
+
+  <!-- ── Error ──────────────────────────────────────────── -->
+  @if (error && !loading) {
+    <div class="sector-page__error card">
+      Could not load sector analysis. The backend may still
+      be generating it.
+    </div>
+  }
+
+  <!-- ── Main content ──────────────────────────────────── -->
+  @if (analysis && !loading) {
+    <div class="sector-page__grid">
+
+      <!-- ── Left column ──────────────────────────────── -->
+      <div class="sector-page__left">
+
+        <!-- AI Analysis -->
+        <div class="card analysis-card">
+          <div class="analysis-card__header">
+            <span class="analysis-card__title">AI Sector Analysis</span>
+            <span class="badge blue-badge">Gemini AI</span>
+          </div>
+          <div class="analysis-card__text">
+            {{ analysis.analysisText }}
+          </div>
+
+          <!-- Sources -->
+          @if (analysis.drivingNews.length > 0) {
+            <div class="analysis-card__sources">
+              <span class="text-xs text-muted">Sources:</span>
+              @for (article of analysis.drivingNews.slice(0, 3);
+                    track article.id) {
+                <span class="source-chip">{{ article.source }}</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Top Stocks Table -->
+        <div class="card stocks-card">
+          <div class="stocks-card__header">
+            <span class="stocks-card__title">
+              Top {{ displayName }} Stocks Today
+            </span>
+          </div>
+
+          <div class="stocks-table">
+            <div class="stocks-table__head">
+              <span>Stock</span>
+              <span>Price</span>
+              <span>Change</span>
+              <span>AI Signal</span>
+            </div>
+
+            @for (stock of analysis.topStocks; track stock.symbol) {
+              <div class="stocks-table__row">
+                <span class="stocks-table__symbol mono">
+                  {{ stock.symbol }}
+                </span>
+                <span class="stocks-table__price mono">
+                  {{ stock.price | number:'1.2-2' }}
+                </span>
+                <span class="stocks-table__change"
+                      [class.bullish]="stock.changePercent >= 0"
+                      [class.bearish]="stock.changePercent < 0">
+                  {{ stock.changePercent >= 0 ? '+' : '' }}{{
+                    stock.changePercent | number:'1.2-2' }}%
+                </span>
+                <span class="stocks-table__signal badge"
+                      [class]="getSignalClass(stock.aiSignal) + '-bg'">
+                  {{ stock.aiSignal }}
+                </span>
+              </div>
+            }
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Right column ──────────────────────────────── -->
+      <div class="sector-page__right">
+
+        <!-- Driving News -->
+        <div class="card news-card">
+          <div class="news-card__title">News Driving This Sector</div>
+
+          @for (article of analysis.drivingNews; track article.id) {
+            <a [href]="article.url" target="_blank"
+               class="news-item">
+              <div class="news-item__source">
+                {{ article.source }}
+                <span class="text-muted">
+                  · {{ formatDate(article.publishedAt) }}
+                </span>
+              </div>
+              <div class="news-item__headline">
+                {{ article.headline }}
+              </div>
+              <span class="badge news-item__sentiment"
+                    [class]="getSignalClass(
+                      article.sentiment === 0 ? 'bullish'
+                      : article.sentiment === 1 ? 'bearish'
+                      : 'neutral') + '-bg'">
+                {{ article.sentiment === 0 ? 'Bullish'
+                  : article.sentiment === 1 ? 'Bearish'
+                  : 'Neutral' }}
+              </span>
+            </a>
+          }
+        </div>
+
+        <!-- Cross-Asset Chain -->
+        <div class="card chain-card">
+          <div class="chain-card__title">Cross-Asset Connection</div>
+
+          <!-- Chain steps -->
+          <div class="chain">
+            @for (step of analysis.crossAssetChain.steps;
+                  track step.label;
+                  let last = $last) {
+              <div class="chain__step">
+                <div class="chain__pill">
+                  {{ step.label }}
+                  <span [class.bullish]="step.direction === '▲'"
+                        [class.bearish]="step.direction === '▼'">
+                    {{ step.direction }}
+                  </span>
+                </div>
+
+                @if (!last) {
+                  <div class="chain__arrow">→</div>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- AI insight -->
+          @if (analysis.crossAssetChain.aiInsight) {
+            <div class="chain-card__insight">
+              {{ analysis.crossAssetChain.aiInsight }}
+            </div>
+          }
+        </div>
+
+      </div>
+
+    </div>
+  }
+
+</div>

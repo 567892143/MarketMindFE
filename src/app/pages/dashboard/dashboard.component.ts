@@ -24,6 +24,8 @@ import { SectorHeatmapComponent } from
   '../../components/sector-heatmap/sector-heatmap.component';
 import { FoSnapshotComponent } from
   '../../components/fo-snapshot/fo-snapshot.component';
+  import { NewsFeedComponent } from
+  '../../components/news-feed/news-feed.component';
 
 @Component({
   selector:    'app-dashboard',
@@ -37,7 +39,8 @@ import { FoSnapshotComponent } from
     UsRecapComponent,
     PriceCardComponent,
     SectorHeatmapComponent,
-    FoSnapshotComponent
+    FoSnapshotComponent,
+    NewsFeedComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl:    './dashboard.component.scss'

@@ -1,1 +1,70 @@
-<p>news-feed works!</p>
+<div class="news-feed">
+
+  <div class="news-feed__header">
+    <span class="news-feed__title">
+      {{ sector ? sector + ' News' : 'Market News' }}
+    </span>
+    <span class="text-xs text-muted">Live feed</span>
+  </div>
+
+  @if (loading) {
+    @for (i of [1,2,3]; track i) {
+      <div class="news-skeleton">
+        <div class="skeleton"
+             style="width:60px;height:10px;margin-bottom:6px">
+        </div>
+        <div class="skeleton"
+             style="width:100%;height:12px;margin-bottom:4px">
+        </div>
+        <div class="skeleton" style="width:75%;height:12px">
+        </div>
+      </div>
+    }
+  }
+
+  @if (!loading && articles.length === 0) {
+    <div class="news-feed__empty text-muted text-sm">
+      No articles yet — trigger news ingestion to populate.
+    </div>
+  }
+
+  <!-- 📌 Angular: track article.id for efficient re-rendering -->
+  @for (article of articles; track article.id) {
+    <a [href]="article.url"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="news-article">
+
+      <div class="news-article__top">
+        <span class="news-article__source">
+          {{ article.source }}
+        </span>
+        <!-- 📌 Custom pipe: relativeTime transforms ISO string -->
+        <span class="news-article__time text-muted">
+          {{ article.publishedAt | relativeTime }}
+        </span>
+      </div>
+
+      <div class="news-article__headline">
+        {{ article.headline }}
+      </div>
+
+      <div class="news-article__footer">
+  <span class="badge news-article__badge"
+        [class]="getSentimentClass(article.sentiment) + '-bg'">
+    {{ getSentimentLabel(article.sentiment) }}
+  </span>
+
+  @if (article.affectedSectors?.length) {
+    <div class="news-article__sectors">
+      @for (s of (article.affectedSectors ?? []).slice(0, 2); track s) {
+        <span class="sector-tag">{{ s }}</span>
+      }
+    </div>
+  }
+</div>
+
+    </a>
+  }
+
+</div>
